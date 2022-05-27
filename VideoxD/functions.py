@@ -13,8 +13,7 @@ loop = asyncio.get_event_loop()
 
 def url_stream(url: str):
     video = pafy.new(url)
-    videos = video.getbest().url
-    return videos
+    return video.getbest().url
 
 
 # Youtube
@@ -43,11 +42,7 @@ async def admin_check(client, message):
     x = await bot.get_chat_members(
         chat_id=message.chat.id, filter="administrators"
     )
-    admins = []
-    for y in x:
-        if y.can_manage_voice_chats:
-            admins.append(y.user.id)
-    return admins
+    return [y.user.id for y in x if y.can_manage_voice_chats]
 
 
 # Video_Stream

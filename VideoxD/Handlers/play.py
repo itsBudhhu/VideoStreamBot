@@ -33,19 +33,16 @@ async def stream(client, message):
         video = await reply.download(file_name="DOWNLOADS/")
         await download_.delete()
     if Calls.is_running:
-        if user_str:
-            next_vid = user_str
-        else:
-            next_vid = video
+        next_vid = user_str or video
         await que.put(next_vid)
         global number
         number += 1
-        content = user_str if user_str else "Telegram Video"
+        content = user_str or "Telegram Video"
         return await message.reply(
             f"Added **Video🎥** : **__{content}__** To Queue!\n\n**Queued at #{number}**"
         )
     try:
-        invideo = user_str if user_str else video
+        invideo = user_str or video
         await video_stream(chat_id, invideo, client, message)
     except Exception as e:
         return await message.reply(e)
